@@ -28,10 +28,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" th:href="@{/}">Главная <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" th:href="@{/}">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
-                <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-item nav-link active" th:href="@{/candidates}">Кандидаты</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <span th:text="${candidate.name}"></span>
                 </td>
                 <td th:text="${candidate.description}" />
-                <td th:text="${candidate.created}" />
+                <td th:text="${#temporals.format(candidate.created, 'dd-MM-yyyy HH:mm')}" />
             </tr>
             </tbody>
         </table>
