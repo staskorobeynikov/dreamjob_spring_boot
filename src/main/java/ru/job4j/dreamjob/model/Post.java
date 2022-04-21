@@ -12,11 +12,21 @@ public class Post {
 
     private LocalDateTime created;
 
-    public Post(int id, String name, String description, LocalDateTime created) {
+    private boolean visible;
+
+    private City city;
+
+    public Post() {
+    }
+
+    public Post(int id, String name, String description,
+                LocalDateTime created, boolean visible, City city) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
+        this.visible = visible;
+        this.city = city;
     }
 
     public int getId() {
@@ -49,6 +59,22 @@ public class Post {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override

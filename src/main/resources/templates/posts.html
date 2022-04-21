@@ -44,6 +44,7 @@
         <th scope="col">Имя</th>
         <th scope="col">Описание</th>
         <th scope="col">Дата создания</th>
+        <th scope="col">Город</th>
       </tr>
       </thead>
       <tbody>
@@ -54,8 +55,15 @@
             <i class="fa fa-edit"></i>
           </a>
           <span th:text="${post.name}"></span>
+          <span th:if="${post.visible}">
+            <i class="fa fa-check-square-o"></i>
+          </span>
+          <span th:if="${!post.visible}">
+            <i class="fa fa-square-o"></i>
+          </span>
         </td>
         <td th:text="${post.description}" />
+        <td th:text="${post.city.name}" />
         <td th:text="${#temporals.format(post.created, 'dd-MM-yyyy HH:mm')}" />
       </tr>
       </tbody>

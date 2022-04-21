@@ -44,6 +44,8 @@
       <div class="card-body">
         <form th:action="@{/updatePost}" method="POST" th:object="${post}">
           <input type="hidden" name="id" th:field="*{id}"/>
+          <input type="hidden" name="id" th:field="*{created}"/>
+          <input type="hidden" name="id" th:field="*{visible}"/>
           <div class="form-group">
             <label for="name" style="font-weight: 900">Имя</label>
             <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
@@ -52,7 +54,13 @@
             <label for="description" style="font-weight: 900">Описание</label>
             <input type="text" class="form-control" name="description" id="description" th:field="*{description}">
           </div>
-          <input type="hidden" name="id" th:field="*{created}"/>
+          <div class="form-group">
+            <label for="city.id">Город</label>
+            <select class="form-control" id="city.id" name="city.id">
+              <option th:each="c : ${cities}" th:value="${c.id}"
+                      th:text="${c.name}" th:selected="${c.id == post.city.id}"></option>
+            </select>
+          </div>
           <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
       </div>
