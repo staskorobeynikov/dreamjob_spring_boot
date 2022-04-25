@@ -10,6 +10,8 @@ import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.PostService;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class PostController {
     private final PostService postService;
@@ -40,6 +42,7 @@ public class PostController {
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute Post post) {
         post.setCity(cityService.findById(post.getCity().getId()));
+        post.setCreated(LocalDateTime.now());
         postService.add(post);
         return "redirect:/posts";
     }
