@@ -50,7 +50,6 @@ public class PostDBStore {
         return posts;
     }
 
-
     public Post add(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
@@ -78,8 +77,8 @@ public class PostDBStore {
     public void update(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "UPDATE post SET name = ?, description = ?, created = ?, " +
-                             "visible = ?, city_id = ? WHERE id = ?",
+                     "UPDATE post SET name = ?, description = ?, created = ?, "
+                             + "visible = ?, city_id = ? WHERE id = ?",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
