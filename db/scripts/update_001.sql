@@ -14,3 +14,11 @@ CREATE TABLE candidate (
     created TIMESTAMP default current_timestamp,
     photo bytea
 );
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email TEXT,
+    password TEXT
+);
+
+ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email)
