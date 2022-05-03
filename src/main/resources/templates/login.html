@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,11 +14,11 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Работа мечты!</title>
 </head>
 <body>
-<div class="container">
+<div class="container pt-3">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Dream Job</a>
         <button class="navbar-toggler" type="button"
@@ -31,41 +31,35 @@
                 <a class="nav-item nav-link" th:href="@{/}">Главная <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
                 <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
-                <a class="nav-item nav-link active" th:href="@{/candidates}">Кандидаты</a>
+                <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
-                <a class="nav-item nav-link" th:href="@{/loginPage}">Войти</a>
+                <a class="nav-item nav-link active" th:href="@{/loginPage}">Войти</a>
             </div>
         </div>
     </nav>
     <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Описание</th>
-                <th scope="col">Фото</th>
-                <th scope="col">Дата создания</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="candidate : ${candidates}">
-                <td th:text="${candidate.id}" />
-                <td>
-                    <a th:href="@{|/formUpdateCandidate/${candidate.id}|}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <span th:text="${candidate.name}"></span>
-                </td>
-                <td th:text="${candidate.description}" />
-                <td>
-                    <img th:width="150" th:high="150" th:src="@{|/photoCandidate/${candidate.id}|}">
-                </td>
-                <td th:text="${#temporals.format(candidate.created, 'dd-MM-yyyy HH:mm')}" />
-            </tr>
-            </tbody>
-        </table>
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Авторизация
+            </div>
+            <div class="card-body">
+                <div th:if="${fail}" class="alert alert-danger" role="alert">
+                    Логин или пароль введены не верно!
+                </div>
+                <form th:action="@{/login}" method="POST" th:object="${user}">
+                    <div class="form-group">
+                        <label for="email" style="font-weight: 900">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" th:placeholder="*{email}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" style="font-weight: 900">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password" th:placeholder="*{password}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>

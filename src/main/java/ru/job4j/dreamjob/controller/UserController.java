@@ -37,4 +37,22 @@ public class UserController {
         }
         return "redirect:/posts";
     }
+
+    @GetMapping("/loginPage")
+    public String loginPage(Model model, @RequestParam(name = "fail", required = false) Boolean fail) {
+        model.addAttribute("fail", fail != null);
+        model.addAttribute("user", new User(0, "Введите email...", "Введите пароль..."));
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute User user) {
+        Optional<User> userDb = service.findUserByEmailAndPwd(
+                user.getEmail(), user.getPassword()
+        );
+        if (userDb.isEmpty()) {
+            return "redirect:/loginPage?fail=true";
+        }
+        return "redirect:/index";
+    }
 }
