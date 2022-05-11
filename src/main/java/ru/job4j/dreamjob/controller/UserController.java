@@ -26,10 +26,9 @@ public class UserController {
     public String addUser(Model model, @RequestParam(name = "fail", required = false) Boolean fail) {
         model.addAttribute("fail", fail != null);
         model.addAttribute("user", new User(
-                0, "Введите имя...","Введите email...", "Введите пароль..."));
+                0, "Введите имя...", "Введите email...", "Введите пароль..."));
         return "addUser";
     }
-
 
     @PostMapping("/registration")
     public String registration(Model model, @ModelAttribute User user) {
@@ -55,7 +54,7 @@ public class UserController {
         model.addAttribute("users", user);
         model.addAttribute("fail", fail != null);
         model.addAttribute("user", new User(
-                0, "Введите имя...","Введите email...", "Введите пароль..."));
+                0, "Введите имя...", "Введите email...", "Введите пароль..."));
         return "login";
     }
 

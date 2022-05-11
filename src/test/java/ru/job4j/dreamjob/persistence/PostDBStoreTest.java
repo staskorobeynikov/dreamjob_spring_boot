@@ -6,6 +6,7 @@ import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -33,7 +34,8 @@ public class PostDBStoreTest {
                 post.getId(), "Senior Java Job", "Spring Security",
                 post.getCreated(), false, new City(3, null));
         store.update(update);
-        Post postInDb = store.findAll().get(0);
+        List<Post> all = store.findAll();
+        Post postInDb = all.get(all.indexOf(post));
         assertThat(postInDb.getName(), is(update.getName()));
         assertThat(postInDb.getDescription(), is(update.getDescription()));
     }
