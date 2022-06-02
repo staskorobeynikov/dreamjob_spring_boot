@@ -46,12 +46,7 @@ public class UserController {
             @RequestParam(name = "fail", required = false) Boolean fail,
             HttpSession session
     ) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("users", user);
+        setUser(model, session);
         model.addAttribute("fail", fail != null);
         model.addAttribute("user", new User(
                 0, "Введите имя...", "Введите email...", "Введите пароль..."));
@@ -75,5 +70,14 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/loginPage";
+    }
+
+    private void setUser(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("users", user);
     }
 }

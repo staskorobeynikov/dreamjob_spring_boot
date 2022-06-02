@@ -27,24 +27,14 @@ public class CandidateController {
 
     @GetMapping("/candidates")
     public String posts(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("candidates", service.findAll());
         return "candidates";
     }
 
     @GetMapping("/formAddCandidate")
     public String addPost(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("candidate",
                 new Candidate(0, "Заполните имя...", "Заполните описание...", null));
         return "addCandidate";
@@ -61,12 +51,7 @@ public class CandidateController {
 
     @GetMapping("/formUpdateCandidate/{candidateId}")
     public String formUpdateCandidate(Model model, @PathVariable("candidateId") int id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("candidate", service.findById(id));
         return "updateCandidate";
     }
@@ -87,5 +72,15 @@ public class CandidateController {
                 .contentLength(candidate.getPhoto().length)
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new ByteArrayResource(candidate.getPhoto()));
+    }
+
+
+    private void setUser(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
     }
 }

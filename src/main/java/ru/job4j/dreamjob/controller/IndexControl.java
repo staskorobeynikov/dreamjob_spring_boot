@@ -9,14 +9,18 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class IndexControl {
-    @GetMapping("/index")
+    @GetMapping(value = {"/", "/index"})
     public String index(Model model, HttpSession session) {
+        setUser(model, session);
+        return "index";
+    }
+
+    private void setUser(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             user = new User();
             user.setName("Гость");
         }
         model.addAttribute("user", user);
-        return "index";
     }
 }

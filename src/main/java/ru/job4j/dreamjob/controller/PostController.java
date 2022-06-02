@@ -27,24 +27,14 @@ public class PostController {
 
     @GetMapping("/posts")
     public String posts(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("posts", postService.findAll());
         return "posts";
     }
 
     @GetMapping("/formAddPost")
     public String addPost(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("cities", cityService.getAllCities());
         model.addAttribute("post",
                 new Post(0, "Заполните имя...",
@@ -63,12 +53,7 @@ public class PostController {
 
     @GetMapping("/formUpdatePost/{postId}")
     public String formUpdatePost(Model model, @PathVariable("postId") int id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setUser(model, session);
         model.addAttribute("cities", cityService.getAllCities());
         model.addAttribute("post", postService.findById(id));
         return "updatePost";
@@ -79,5 +64,14 @@ public class PostController {
         post.setCity(cityService.findById(post.getCity().getId()));
         postService.update(post);
         return "redirect:/posts";
+    }
+
+    private void setUser(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
     }
 }
