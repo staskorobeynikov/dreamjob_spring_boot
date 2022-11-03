@@ -74,7 +74,6 @@ public class CandidateController {
                 .body(new ByteArrayResource(candidate.getPhoto()));
     }
 
-
     private void setUser(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {

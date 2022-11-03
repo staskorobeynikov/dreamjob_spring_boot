@@ -19,7 +19,7 @@ public class UserService {
         return store.create(user);
     }
 
-    public Optional<User> findUserByEmailAndPwd(String email, String password) {
-        return store.findUserByEmailAndPwd(email, password);
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+        return store.findUserByEmailAndPassword(email, password);
     }
 }

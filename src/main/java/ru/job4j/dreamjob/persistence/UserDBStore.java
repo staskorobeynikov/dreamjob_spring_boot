@@ -9,13 +9,23 @@ import ru.job4j.dreamjob.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
 @Repository
 public class UserDBStore {
 
     private static final Logger LOG = LogManager.getLogger(UserDBStore.class);
+
+    private static final String INSERT_USER = """
+                                              INSERT INTO users(name, email, password)
+                                              VALUES (?, ?, ?)
+                                              """;
+
+    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = """
+                                                                  SELECT * FROM users
+                                                                  WHERE email = ?
+                                                                  AND password = ?
+                                                                  """;
 
     private final BasicDataSource pool;
 
@@ -27,8 +37,7 @@ public class UserDBStore {
         Optional<User> result = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO users(name, email, password) "
-                             + "VALUES (?, ?, ?)",
+                     INSERT_USER,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
@@ -47,11 +56,11 @@ public class UserDBStore {
         return result;
     }
 
-    public Optional<User> findUserByEmailAndPwd(String email, String password) {
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
         Optional<User> result = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT * FROM users WHERE email = ? AND password = ?")
+                     FIND_USER_BY_EMAIL_AND_PASSWORD)
         ) {
             ps.setString(1, email);
             ps.setString(2, password);
